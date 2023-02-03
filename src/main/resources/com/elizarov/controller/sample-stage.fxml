@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.elizarov.WeaverController"
+            fx:controller="com.elizarov.controller.WeaverController"
             prefHeight="100.0" prefWidth="350.0" spacing="10" alignment="CENTER">
 
     <Label fx:id="weatherLabel"/>

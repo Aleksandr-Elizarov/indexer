@@ -1,39 +1,35 @@
 package com.elizarov;
 
+import com.elizarov.service.MainViewService;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class JavaFxApplication extends Application {
 
-    private ConfigurableApplicationContext applicationContext;
+  private ConfigurableApplicationContext applicationContext;
+  private MainViewService service;
 
-    @Override
-    public void init() {
-        String[] args = getParameters().getRaw().toArray(new String[0]);
+  @Override
+  public void init() {
+    String[] args = getParameters().getRaw().toArray(new String[0]);
 
-        this.applicationContext = new SpringApplicationBuilder()
-                .sources(com.elizarov.DemoApplication.class)
-                .run(args);
-    }
+    this.applicationContext = new SpringApplicationBuilder()
+            .sources(IndexerApplication.class)
+            .run(args);
+    service = applicationContext.getBean(MainViewService.class);
+  }
 
-    @Override
-    public void start(Stage stage) {
-        FxWeaver weaver = applicationContext.getBean(FxWeaver.class);
-        Parent root = weaver.loadView(com.elizarov.WeaverController.class);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+  @Override
+  public void start(Stage stage) {
+    service.doMainWindow(stage);
+  }
 
-    @Override
-    public void stop() {
-        this.applicationContext.close();
-        Platform.exit();
-    }
+  @Override
+  public void stop() {
+    this.applicationContext.close();
+    Platform.exit();
+  }
 }
