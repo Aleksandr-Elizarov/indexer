@@ -33,7 +33,7 @@
       <Insets/>
     </GridPane.margin>
   </TextField>
-  <Button id="buttonCreateIndexes" fx:id="buttonCreateIndexes" mnemonicParsing="false" prefHeight="45.0"
+  <Button id="buttonCreateIndexes" fx:id="buttonCreateIndexes" mnemonicParsing="false" onAction="#createIndexes" prefHeight="45.0"
           prefWidth="150.0" text="Create Indexes" textAlignment="CENTER" GridPane.halignment="RIGHT">
     <font>
       <Font size="17.0"/>

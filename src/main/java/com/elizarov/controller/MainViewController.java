@@ -14,6 +14,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -45,5 +47,8 @@ public class MainViewController {
     service.doMainWindow(new Stage());
   }
 
-
+  public void createIndexes(ActionEvent event) throws IOException {
+    service.doIndexOkWindow(new Stage());
+    buttonCreateIndexes.setDisable(true);
+  }
 }
