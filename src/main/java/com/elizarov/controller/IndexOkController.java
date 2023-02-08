@@ -15,25 +15,23 @@ import org.springframework.stereotype.Component;
 @FxmlView("indexOk.fxml")
 public class IndexOkController {
 
-    private Indexer indexer;
+  @FXML
+  Button buttonOk1;
+  @FXML
+  Label labelOk1;
+  private Indexer indexer;
+  @Autowired
+  public IndexOkController(Indexer indexer) {
+    this.indexer = indexer;
+  }
 
-    @Autowired
-    public IndexOkController(Indexer indexer) {
-        this.indexer = indexer;
-    }
+  @FXML
+  public void initialize() {
+    labelOk1.setText(indexer.getTime());
+  }
 
-    @FXML
-    Button buttonOk1;
-    @FXML
-    Label labelOk1;
-
-    @FXML
-    public void initialize() {
-        labelOk1.setText(indexer.getTime());
-    }
-
-    public void exit(ActionEvent event){
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-    }
+  public void exit(ActionEvent event) {
+    ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+  }
 
 }
