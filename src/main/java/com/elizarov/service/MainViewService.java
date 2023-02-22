@@ -43,7 +43,6 @@ public class MainViewService {
   public void doMainWindow(Stage stage) {
     FxWeaver weaver = applicationContext.getBean(FxWeaver.class);
     Parent root = weaver.loadView(MainViewController.class);
-
     show(root, stage);
   }
 
@@ -81,6 +80,10 @@ public class MainViewService {
     FxWeaver weaver = applicationContext.getBean(FxWeaver.class);
     Pane root = weaver.loadView(TextEditorController.class);
     show(root, stage);
+  }
+
+  public void selectIndexDirectory() {
+    indexer.selectIndexDirectory();
   }
 
 }

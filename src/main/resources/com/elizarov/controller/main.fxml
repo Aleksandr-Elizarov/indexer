@@ -11,44 +11,46 @@
 <?import javafx.scene.web.WebView?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="900.0"
+          stylesheets="/styles.css"
           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.elizarov.controller.MainViewController"
-          stylesheets="/styles.css">
+          fx:controller="com.elizarov.controller.MainViewController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="430.0" minWidth="155.0" prefWidth="320.0"/>
-    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="155.0" prefWidth="550.0"/>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="430.0" minWidth="155.0" prefWidth="280.0" />
+    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="155.0" prefWidth="630.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES"/>
-    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS"/>
-    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="50.0" prefHeight="420.0" vgrow="ALWAYS"/>
-    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="50.0" prefHeight="420.0" vgrow="ALWAYS" />
   </rowConstraints>
-  <padding>
-    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-  </padding>
-  <TextField id="search" fx:id="search" alignment="CENTER" onAction="#setSearchQuery" prefHeight="45.0" prefWidth="550.0"
-             promptText="lucene syntax" GridPane.columnIndex="1" GridPane.rowIndex="1">
+  <children>
+
+  <TextField id="search" fx:id="search" alignment="CENTER" onAction="#setSearchQuery" prefHeight="45.0" prefWidth="550.0" promptText="lucene syntax as you can see below" GridPane.columnIndex="1">
     <GridPane.margin>
-      <Insets/>
+      <Insets />
     </GridPane.margin>
   </TextField>
-  <Button id="buttonCreateIndexes" fx:id="buttonCreateIndexes" mnemonicParsing="false" onAction="#createIndexes" prefHeight="45.0"
-          prefWidth="150.0" text="Create Indexes" textAlignment="CENTER" GridPane.halignment="RIGHT">
+  <Button id="buttonCreateIndexes" fx:id="buttonCreateIndexes" mnemonicParsing="false" onAction="#createIndexes" prefHeight="45.0" prefWidth="150.0" text="Create Indexes" textAlignment="CENTER" GridPane.halignment="LEFT">
     <font>
-      <Font size="17.0"/>
+      <Font size="17.0" />
     </font>
     <GridPane.margin>
-      <Insets right="70.0"/>
+      <Insets left="5.0" />
     </GridPane.margin>
   </Button>
-  <WebView id="result" fx:id="result" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-           GridPane.rowIndex="2"/>
-  <ScrollPane id="scrollPane" fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2"/>
-  <Button id="buttonChooseIndexFolder" fx:id="buttonChooseIndexFolder" mnemonicParsing="false" prefHeight="45.0"
-          prefWidth="50.0" GridPane.halignment="RIGHT">
+  <WebView id="result" fx:id="result" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+  <ScrollPane id="scrollPane" fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+  <Button id="buttonChooseIndexFolder" fx:id="buttonChooseIndexFolder" mnemonicParsing="false" onAction="#selectDirectory" prefHeight="45.0" prefWidth="50.0" GridPane.halignment="LEFT">
     <GridPane.margin>
-      <Insets right="5.0"/>
+      <Insets left="160.0" />
     </GridPane.margin>
   </Button>
+   <Button id="buttonSettings" fx:id="buttonSettings" mnemonicParsing="false" prefHeight="45.0" prefWidth="50.0" GridPane.halignment="RIGHT">
+      <GridPane.margin>
+         <Insets right="5.0" />
+      </GridPane.margin>
+   </Button>
+  </children>
+  <padding>
+    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+  </padding>
 </GridPane>

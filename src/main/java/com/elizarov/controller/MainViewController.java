@@ -26,9 +26,6 @@ import java.util.List;
 @FxmlView("main.fxml")
 public class MainViewController {
 
-  private MainViewService service;
-  private List<String> links;
-
   // Main view elements
   @FXML
   TextField search;
@@ -40,8 +37,10 @@ public class MainViewController {
   Button buttonCreateIndexes;
   @FXML
   Button buttonChooseIndexFolder;
-
-
+  @FXML
+  Button buttonSettings;
+  private MainViewService service;
+  private List<String> links;
 
   @Autowired
   public MainViewController(MainViewService service) {
@@ -50,20 +49,28 @@ public class MainViewController {
 
   public void createNewMainTab(ActionEvent event) {
     service.doMainWindow(new Stage());
+
   }
 
   public void createIndexes(ActionEvent event) throws IOException {
     service.doIndexOkWindow(new Stage());
-    buttonCreateIndexes.setDisable(true);
+    // deleted. Check it.
+//    buttonCreateIndexes.setDisable(true);
   }
 
   public void setSearchQuery(ActionEvent event) throws InvalidTokenOffsetsException, ParseException, IOException {
     WebEngine webEngine = result.getEngine();
 
+
     String searchText = search.getText();
-    if (searchText == null || searchText.isEmpty()){
-      searchText = "workRequestId";
-    }
+
+    /**
+     if (searchText == null || searchText.isEmpty()){
+     searchText = "workRequestId";
+     }
+     **/
+
+
     service.search(searchText, 0);
     links = service.getFiles();
 
@@ -72,14 +79,13 @@ public class MainViewController {
       Hyperlink hyperlink = new Hyperlink(links.get(i));
       int docid = service.getSearcher().getHits().scoreDocs[i].doc;
       String fileToOpen = links.get(i);
-      String finalSearchText = searchText;
       hyperlink.setOnMouseClicked(event1 -> {
-        if(event1.getButton() == MouseButton.SECONDARY){
+        if (event1.getButton() == MouseButton.SECONDARY) {
           service.setFileToOpen(fileToOpen);
           service.doTextEditorWindow(new Stage());
         }
         try {
-          service.search(finalSearchText, docid);
+          service.search(searchText, docid);
           webEngine.loadContent(service.getSearcher().getSearchResult());
         } catch (InvalidTokenOffsetsException | IOException | ParseException e) {
           e.printStackTrace();
@@ -90,6 +96,10 @@ public class MainViewController {
     }
     scrollPane.setContent(vbox);
     webEngine.loadContent(service.getSearcher().getSearchResult());
+  }
+
+  public void selectDirectory() {
+    service.selectIndexDirectory();
   }
 
 
