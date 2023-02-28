@@ -19,8 +19,10 @@ import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 
 @Component
@@ -40,6 +42,8 @@ public class MainViewController {
   Button buttonChooseIndexFolder;
   @FXML
   Button buttonSettings;
+  @FXML
+  Button buttonLucene;
   private MainViewService service;
   private List<String> links;
 
@@ -57,8 +61,6 @@ public class MainViewController {
   public void createIndexes(ActionEvent event) throws IOException {
 
     service.doIndexOkWindow(new Stage());
-    // deleted. Check it.
-//    buttonCreateIndexes.setDisable(true);
   }
 
   public void setSearchQuery(ActionEvent event) throws InvalidTokenOffsetsException, ParseException, IOException {
@@ -66,7 +68,13 @@ public class MainViewController {
     String searchText = search.getText();
 
     if (searchText == null || searchText.isEmpty()) {
-      searchText = "id";
+      Properties properties = new Properties();
+      try (FileReader input = new FileReader("app.properties")) {
+        properties.load(input);
+        searchText = properties.getProperty("defaultQuery");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
 
     service.search(searchText, 0);
@@ -99,6 +107,14 @@ public class MainViewController {
 
   public void selectDirectory() {
     service.selectIndexDirectory();
+  }
+
+  public void openSettings(ActionEvent event) {
+    service.openSettingsWindow(new Stage());
+  }
+
+  public void openLuceneReference(ActionEvent event) {
+    service.createLuceneWindow(new Stage());
   }
 
 

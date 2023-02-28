@@ -10,7 +10,10 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 
@@ -43,21 +46,18 @@ public class TextEditorController {
   @FXML
   public void initialize() {
     Properties properties = new Properties();
-
-      try(FileReader input = new FileReader("app.properties")){
-        properties.load(input);
-        editor = properties.getProperty("pathToEditor");
-        if(editor==null){
-          labelTextEditor.setText("Please chose any editor! Throw button below!");
-        }else {
-          String editorName = new File(editor).getName();
-          labelTextEditor.setText("Open document with " + editorName);
-        }
-
-      }catch (IOException e){
-        e.printStackTrace();
+    try (FileReader input = new FileReader("app.properties")) {
+      properties.load(input);
+      editor = properties.getProperty("pathToEditor");
+      if (editor == null) {
+        labelTextEditor.setText("Please chose any editor! Throw button below!");
+      } else {
+        String editorName = new File(editor).getName();
+        labelTextEditor.setText("Open document with " + editorName);
       }
-
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
   }
 
@@ -66,14 +66,13 @@ public class TextEditorController {
   }
 
   public void openAndExit(ActionEvent event) {
-    try{
+    try {
       new ProcessBuilder(editor, fileToOpen).start();
       closeWindow(event);
-    }catch (IOException ex){
+    } catch (IOException ex) {
       labelTextEditor.setText("Please chose any editor! Throw button below!");
       ex.printStackTrace();
     }
-
   }
 
   public void chooseEditor(ActionEvent event) {
@@ -81,9 +80,9 @@ public class TextEditorController {
     editor = chooser.selectFile().getAbsolutePath();
     labelTextEditor.setText("Open with " + editor);
     properties.setProperty("pathToEditor", editor);
-    try(FileWriter output = new FileWriter("app.properties")){
+    try (FileWriter output = new FileWriter("app.properties")) {
       properties.store(output, "Properties");
-    }catch (IOException e){
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }

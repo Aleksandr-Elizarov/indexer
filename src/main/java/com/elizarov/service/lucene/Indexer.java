@@ -103,8 +103,8 @@ public class Indexer {
 
 
   public String getTime() {
-    return (endTime-startTime)>=0?(numIndexed + " File indexed, time taken: " +
-            (endTime - startTime) + " ms"):"You did not choose files!";
+    return (endTime - startTime) >= 0 ? (numIndexed + " File indexed, time taken: " +
+            (endTime - startTime) + " ms") : "You did not choose files!";
   }
 
 

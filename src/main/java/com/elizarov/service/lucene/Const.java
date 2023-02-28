@@ -12,10 +12,11 @@ public class Const {
   public static final String INDEX_DIR = "src\\main\\resources\\indexes";
   public static final String PRE_TAG = "<font color=red>";
   public static final String POST_TAG = "</font>";
+  public static final String APACHE_LUCENE_REF = "https://lucene.apache" +
+          ".org/core/2_9_4/queryparsersyntax.html";
   public static final String LUCENE_SYNTAX = "<p>" +
           "Use syntax that you can see below or visit " +
-          "<a href=\"https://lucene.apache.org/core/2_9_4/queryparsersyntax" +
-          ".html\">apache lucene site</a> " +
+          "<a href=\""+Const.APACHE_LUCENE_REF+"\">apache lucene site</a> " +
           "<p>A Single Term is a single word such as \"test\" or \"hello\"" +
           ".</p>" +
           " " +

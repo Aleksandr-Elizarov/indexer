@@ -1,14 +1,13 @@
 package com.elizarov.service;
 
-import com.elizarov.controller.IndexOkController;
-import com.elizarov.controller.MainViewController;
-import com.elizarov.controller.TextEditorController;
+import com.elizarov.controller.*;
 import com.elizarov.service.lucene.Indexer;
 import com.elizarov.service.lucene.Searcher;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -28,6 +27,7 @@ public class MainViewService {
   private Searcher searcher;
   private TextEditorController editorController;
 
+
   @Autowired
   public MainViewService(ConfigurableApplicationContext applicationContext,
                          Indexer indexer,
@@ -37,6 +37,7 @@ public class MainViewService {
     this.indexer = indexer;
     this.searcher = searcher;
     this.editorController = editorController;
+
 
   }
 
@@ -86,4 +87,15 @@ public class MainViewService {
     indexer.selectIndexDirectory();
   }
 
+  public void openSettingsWindow(Stage stage) {
+    FxWeaver weaver = applicationContext.getBean(FxWeaver.class);
+    Pane root = weaver.loadView(SettingsController.class);
+    show(root, stage);
+  }
+
+  public void createLuceneWindow(Stage stage) {
+    FxWeaver weaver = applicationContext.getBean(FxWeaver.class);
+    WebView root = weaver.loadView(LuceneReferenceController.class);
+    show(root, stage);
+  }
 }

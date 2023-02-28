@@ -10,6 +10,12 @@
     -fx-background-position:center;
 }
 
+#buttonLucene {
+    -fx-background-image: url('/images/lucene.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+}
+
 #buttonSettings {
     -fx-background-image: url('/images/buttonSettings.png');
     -fx-background-repeat: no-repeat;
