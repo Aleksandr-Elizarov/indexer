@@ -1,6 +1,7 @@
 package com.elizarov.controller;
 
 import com.elizarov.service.MainViewService;
+import com.elizarov.service.lucene.Const;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,12 +48,14 @@ public class MainViewController {
     this.service = service;
   }
 
-  public void createNewMainTab(ActionEvent event) {
-    service.doMainWindow(new Stage());
-
+  @FXML
+  public void initialize() {
+    result.getEngine().loadContent(Const.LUCENE_SYNTAX);
+    result.getEngine().reload();
   }
 
   public void createIndexes(ActionEvent event) throws IOException {
+
     service.doIndexOkWindow(new Stage());
     // deleted. Check it.
 //    buttonCreateIndexes.setDisable(true);
@@ -60,16 +63,11 @@ public class MainViewController {
 
   public void setSearchQuery(ActionEvent event) throws InvalidTokenOffsetsException, ParseException, IOException {
     WebEngine webEngine = result.getEngine();
-
-
     String searchText = search.getText();
 
-    /**
-     if (searchText == null || searchText.isEmpty()){
-     searchText = "workRequestId";
-     }
-     **/
-
+    if (searchText == null || searchText.isEmpty()) {
+      searchText = "id";
+    }
 
     service.search(searchText, 0);
     links = service.getFiles();
@@ -79,13 +77,14 @@ public class MainViewController {
       Hyperlink hyperlink = new Hyperlink(links.get(i));
       int docid = service.getSearcher().getHits().scoreDocs[i].doc;
       String fileToOpen = links.get(i);
+      String finalSearchText = searchText;
       hyperlink.setOnMouseClicked(event1 -> {
         if (event1.getButton() == MouseButton.SECONDARY) {
           service.setFileToOpen(fileToOpen);
           service.doTextEditorWindow(new Stage());
         }
         try {
-          service.search(searchText, docid);
+          service.search(finalSearchText, docid);
           webEngine.loadContent(service.getSearcher().getSearchResult());
         } catch (InvalidTokenOffsetsException | IOException | ParseException e) {
           e.printStackTrace();

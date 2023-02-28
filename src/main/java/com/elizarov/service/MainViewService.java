@@ -23,8 +23,8 @@ import java.util.List;
 @Service
 public class MainViewService {
 
-  private ConfigurableApplicationContext applicationContext;
   private final Indexer indexer;
+  private ConfigurableApplicationContext applicationContext;
   private Searcher searcher;
   private TextEditorController editorController;
 
@@ -64,7 +64,7 @@ public class MainViewService {
     searcher.highlighter(query, docsNum);
   }
 
-  public List<String> getFiles(){
+  public List<String> getFiles() {
     return searcher.getFiles();
   }
 
@@ -76,7 +76,7 @@ public class MainViewService {
     editorController.setFileToOpen(fileName);
   }
 
-  public void doTextEditorWindow(Stage stage){
+  public void doTextEditorWindow(Stage stage) {
     FxWeaver weaver = applicationContext.getBean(FxWeaver.class);
     Pane root = weaver.loadView(TextEditorController.class);
     show(root, stage);

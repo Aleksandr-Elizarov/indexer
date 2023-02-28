@@ -1,5 +1,6 @@
 package com.elizarov.service.lucene;
 
+import net.lingala.zip4j.ZipFile;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -16,7 +17,11 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class Indexer {
@@ -70,28 +75,36 @@ public class Indexer {
     createIndexer(indexDirectoryPath);
     //get all files in the data directory
     List<File> files = fileChooser.selectFiles();
+
     startTime = System.currentTimeMillis();
     int numDocs = 0;
     if (files != null) {
       for (File file : files) {
-        if (!file.isDirectory()
-                && !file.isHidden()
-                && file.exists()
-                && file.canRead()) {
+        if (checkZip(file)) {
+          numDocs += indexZipFile(file);
+        } else if (checkFileProperties(file)) {
           indexFile(file);
           numDocs++;
         }
       }
-    }
-    numIndexed = numDocs;
-    endTime = System.currentTimeMillis();
 
+      numIndexed = numDocs;
+      endTime = System.currentTimeMillis();
+
+    }
+  }
+
+  private boolean checkFileProperties(File file) {
+    return !file.isDirectory()
+            && !file.isHidden()
+            && file.exists()
+            && file.canRead();
   }
 
 
   public String getTime() {
-    return numIndexed + " File indexed, time taken: " +
-            (endTime - startTime) + " ms";
+    return (endTime-startTime)>=0?(numIndexed + " File indexed, time taken: " +
+            (endTime - startTime) + " ms"):"You did not choose files!";
   }
 
 
@@ -116,4 +129,47 @@ public class Indexer {
   public File getIndexDirectoryPath() {
     return indexDirectoryPath;
   }
+
+  private void unZip(File file) {
+    String destination =
+            getPathToUnzippedDirectory(file).replace("\\", "/");
+    try {
+      ZipFile zipFile = new ZipFile(file);
+      zipFile.extractAll(destination);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private Boolean checkZip(File file) {
+    return file.getName().endsWith(".zip");
+  }
+
+  private String getPathToUnzippedDirectory(File file) {
+    return file.getParent() + "\\" + file.getName().replace(".zip", "") +
+            "\\";
+  }
+
+  private int indexZipFile(File file) throws IOException {
+    unZip(file);
+    int numDocs = 0;
+    String pathToUnzippedDirectory =
+            getPathToUnzippedDirectory(file);
+    List<File> filesInFolder = Files.walk(Paths.get(pathToUnzippedDirectory))
+            .filter(Files::isRegularFile)
+            .map(Path::toFile)
+            .collect(Collectors.toList());
+    for (File fileInFolder : filesInFolder) {
+      if (checkZip(fileInFolder)) {
+        numDocs += indexZipFile(fileInFolder);
+      } else if (checkFileProperties(fileInFolder)) {
+        indexFile(fileInFolder);
+        numDocs++;
+      }
+    }
+    return numDocs;
+  }
+
+
 }
