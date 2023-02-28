@@ -10,7 +10,8 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.Properties;
 
 
 @Component
@@ -27,7 +28,7 @@ public class TextEditorController {
   Button buttonOpenEditor;
 
   IndexFileChooser chooser;
-  private String editor = "notepad++";
+  private String editor;
   private String fileToOpen;
 
   @Autowired
@@ -41,21 +42,50 @@ public class TextEditorController {
 
   @FXML
   public void initialize() {
-    labelTextEditor.setText("Open document from Notepad++");
+    Properties properties = new Properties();
+
+      try(FileReader input = new FileReader("app.properties")){
+        properties.load(input);
+        editor = properties.getProperty("pathToEditor");
+        if(editor==null){
+          labelTextEditor.setText("Please chose any editor! Throw button below!");
+        }else {
+          String editorName = new File(editor).getName();
+          labelTextEditor.setText("Open document with " + editorName);
+        }
+
+      }catch (IOException e){
+        e.printStackTrace();
+      }
+
+
   }
 
   public void exit(ActionEvent event) {
     closeWindow(event);
   }
 
-  public void openAndExit(ActionEvent event) throws IOException {
-    new ProcessBuilder(editor, fileToOpen).start();
-    closeWindow(event);
+  public void openAndExit(ActionEvent event) {
+    try{
+      new ProcessBuilder(editor, fileToOpen).start();
+      closeWindow(event);
+    }catch (IOException ex){
+      labelTextEditor.setText("Please chose any editor! Throw button below!");
+      ex.printStackTrace();
+    }
+
   }
 
   public void chooseEditor(ActionEvent event) {
+    Properties properties = new Properties();
     editor = chooser.selectFile().getAbsolutePath();
-    labelTextEditor.setText("Open with" + editor);
+    labelTextEditor.setText("Open with " + editor);
+    properties.setProperty("pathToEditor", editor);
+    try(FileWriter output = new FileWriter("app.properties")){
+      properties.store(output, "Properties");
+    }catch (IOException e){
+      e.printStackTrace();
+    }
   }
 
   private void closeWindow(ActionEvent event) {

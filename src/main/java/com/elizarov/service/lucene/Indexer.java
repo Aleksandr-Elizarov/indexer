@@ -114,7 +114,6 @@ public class Indexer {
 
   public void createIndexer(File indexDirectoryPath) throws IOException {
     //this directory will contain the indexes
-//        indexDirectoryPath = new File(LuceneConstants.INDEX_DIR);
     Directory indexDirectory = FSDirectory.open(indexDirectoryPath.toPath());
     //create analyzer with the default stop words
     Analyzer analyzer = new StandardAnalyzer();
