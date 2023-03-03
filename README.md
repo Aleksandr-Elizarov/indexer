@@ -37,8 +37,7 @@ Directories in .zip archives will be indexed.
 **Enter your request on search field**
 ![StartApplication](readme_images/search_query.png)
 
-**Use <a href=https://lucene.apache" +
-".org/core/2_9_4/queryparsersyntax.html>lucene syntax</a> for complex query**
+**Use <a href=https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>lucene syntax</a> for complex query**
 ![StartApplication](readme_images/lucene_syntax.png)
 
 4. Also, you may open files with text matches via text editor you prefer by right click on files in application 
