@@ -8,57 +8,92 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="101.0" prefWidth="321.0"
-          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.elizarov.controller.SettingsController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.0" minWidth="10.0" prefWidth="137.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.0" minWidth="10.0" prefWidth="138.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.0" minWidth="10.0" prefWidth="57.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Button id="saveButton2" fx:id="saveButton2" mnemonicParsing="false" onAction="#save2" prefHeight="45.0" prefWidth="53.0" text="Save" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding></Button>
-      <Button id="saveButton1" fx:id="saveButton1" mnemonicParsing="false" onAction="#save1" prefHeight="45.0" prefWidth="53.0" text="Save" GridPane.columnIndex="2">
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding></Button>
-      <TextField id="settingsProperty1" fx:id="settingsProperty1" prefHeight="40.0" prefWidth="134.0" GridPane.columnIndex="1">
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding></TextField>
-      <TextField id="settingsProperty2" fx:id="settingsProperty2" prefHeight="40.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding></TextField>
-      <Label id="settingsLabel1" fx:id="settingsLabel1" prefHeight="39.0" prefWidth="129.0" text="Label">
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding>
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin></Label>
-      <Label id="settingsLabel2" fx:id="settingsLabel2" prefHeight="39.0" prefWidth="129.0" text="Label" GridPane.rowIndex="1">
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding>
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin></Label>
-   </children>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0"
+          prefWidth="566.0" stylesheets="/styles.css" xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elizarov.controller.SettingsController">
+   <columnConstraints>
+      <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="150.0" minWidth="10.0" prefWidth="150.0"/>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="357.0"/>
+      <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" maxWidth="55.0" minWidth="55.0"
+                         prefWidth="55.0"/>
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+   </rowConstraints>
+   <Button id="saveButton2" fx:id="saveButton2" mnemonicParsing="false" onAction="#save2" prefHeight="45.0"
+           prefWidth="53.0" text="Save" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets/>
+      </GridPane.margin>
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+   </Button>
+   <Button id="saveButton1" fx:id="saveButton1" mnemonicParsing="false" onAction="#save1" prefHeight="45.0"
+           prefWidth="53.0" GridPane.columnIndex="2">
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+   </Button>
+   <TextField id="settingsProperty1" fx:id="settingsProperty1" prefHeight="40.0" prefWidth="134.0"
+              GridPane.columnIndex="1">
+      <GridPane.margin>
+         <Insets left="5.0" right="5.0"/>
+      </GridPane.margin>
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+   </TextField>
+   <TextField id="settingsProperty2" fx:id="settingsProperty2" prefHeight="40.0" prefWidth="134.0"
+              GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets left="5.0" right="5.0"/>
+      </GridPane.margin>
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+   </TextField>
+   <Label id="settingsLabel1" fx:id="settingsLabel1" prefHeight="39.0" prefWidth="129.0" text="Label">
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+      <GridPane.margin>
+         <Insets left="5.0" right="5.0"/>
+      </GridPane.margin>
+   </Label>
+   <Label id="settingsLabel2" fx:id="settingsLabel2" prefHeight="39.0" prefWidth="129.0" text="Label"
+          GridPane.rowIndex="1">
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+      <GridPane.margin>
+         <Insets left="5.0" right="5.0"/>
+      </GridPane.margin>
+   </Label>
+   <Label id="settingsLabel3" fx:id="settingsLabel3" prefHeight="39.0" prefWidth="129.0" text="Label"
+          GridPane.rowIndex="2">
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+      <GridPane.margin>
+         <Insets left="5.0" right="5.0"/>
+      </GridPane.margin>
+   </Label>
+   <TextField id="settingsProperty3" fx:id="settingsProperty3" prefHeight="40.0" prefWidth="134.0"
+              GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+      <GridPane.margin>
+         <Insets left="5.0" right="5.0"/>
+      </GridPane.margin>
+   </TextField>
+   <Button id="saveButton3" fx:id="saveButton3" mnemonicParsing="false" onAction="#save3" prefHeight="45.0"
+           prefWidth="53.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <padding>
+         <Insets left="5.0" right="5.0"/>
+      </padding>
+   </Button>
 </GridPane>

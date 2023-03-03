@@ -20,6 +20,7 @@ public class IndexOkController {
   @FXML
   Label labelOk1;
   private Indexer indexer;
+
   @Autowired
   public IndexOkController(Indexer indexer) {
     this.indexer = indexer;

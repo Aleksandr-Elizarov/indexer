@@ -1,25 +1,37 @@
-package com.elizarov.service.lucene;
+package com.elizarov.service;
 
+import com.elizarov.service.lucene.Const;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 @Service
-public class IndexFileChooser {
+public class AppFileChooser {
 
-  private static final File CURRENT_DATA_DIRECTORY_PATH = new File(Const.CURRENT_DATA_DIRECTORY_PATH);
   private static final File INDEX_DIR = new File(Const.INDEX_DIR);
+  private static File currentDataDirectoryPath;
   private final FileChooser fileChooser;
   private final DirectoryChooser directoryChooser;
 
-  public IndexFileChooser() {
+  public AppFileChooser() {
+    try (FileReader input = new FileReader("app.properties")) {
+      Properties properties = new Properties();
+      properties.load(input);
+      currentDataDirectoryPath = new File(properties.getProperty(
+              "defaultLogPath", Const.INDEX_DIR));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     fileChooser = new FileChooser();
     directoryChooser = new DirectoryChooser();
-    fileChooser.setInitialDirectory(CURRENT_DATA_DIRECTORY_PATH);
+    fileChooser.setInitialDirectory(currentDataDirectoryPath);
     directoryChooser.setInitialDirectory(INDEX_DIR);
   }
 
@@ -40,5 +52,10 @@ public class IndexFileChooser {
   public File selectFile() {
     fileChooser.setTitle("Select text editor app");
     return fileChooser.showOpenDialog(new Stage());
+  }
+
+  public File selectDirectory() {
+    directoryChooser.setTitle("Select directory");
+    return directoryChooser.showDialog(new Stage());
   }
 }

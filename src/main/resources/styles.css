@@ -34,4 +34,16 @@
     -fx-text-fill: #0000ff;
 }
 
+#saveButton3{
+-fx-background-image: url('/images/buttonChooseFolder.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+}
+
+#saveButton1{
+-fx-background-image: url('/images/buttonChooseFolder.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+}
+
 

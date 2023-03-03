@@ -76,8 +76,12 @@ public class MainViewController {
         e.printStackTrace();
       }
     }
+    try {
+      service.search(searchText, 0);
+    } catch (IllegalArgumentException ex) {
+      System.out.println("Do not see here! Choose files to index!");
+    }
 
-    service.search(searchText, 0);
     links = service.getFiles();
 
     VBox vbox = new VBox();

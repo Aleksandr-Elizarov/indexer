@@ -1,6 +1,6 @@
 package com.elizarov.controller;
 
-import com.elizarov.service.lucene.IndexFileChooser;
+import com.elizarov.service.AppFileChooser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,12 +30,13 @@ public class TextEditorController {
   @FXML
   Button buttonOpenEditor;
 
-  IndexFileChooser chooser;
+  AppFileChooser chooser;
+  Properties properties;
   private String editor;
   private String fileToOpen;
 
   @Autowired
-  public TextEditorController(IndexFileChooser chooser) {
+  public TextEditorController(AppFileChooser chooser) {
     this.chooser = chooser;
   }
 
@@ -45,7 +46,7 @@ public class TextEditorController {
 
   @FXML
   public void initialize() {
-    Properties properties = new Properties();
+    properties = new Properties();
     try (FileReader input = new FileReader("app.properties")) {
       properties.load(input);
       editor = properties.getProperty("pathToEditor");
@@ -76,7 +77,6 @@ public class TextEditorController {
   }
 
   public void chooseEditor(ActionEvent event) {
-    Properties properties = new Properties();
     editor = chooser.selectFile().getAbsolutePath();
     labelTextEditor.setText("Open with " + editor);
     properties.setProperty("pathToEditor", editor);

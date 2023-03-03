@@ -22,3 +22,4 @@ target/
 
 ### Lucene ###
 indexes/
+/bin/

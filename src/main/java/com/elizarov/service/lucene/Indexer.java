@@ -1,5 +1,6 @@
 package com.elizarov.service.lucene;
 
+import com.elizarov.service.AppFileChooser;
 import net.lingala.zip4j.ZipFile;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 public class Indexer {
 
-  private final IndexFileChooser fileChooser;
+  private final AppFileChooser fileChooser;
   private int numIndexed = 0;
   private Long startTime = 0L;
   private Long endTime = 0L;
@@ -35,7 +36,7 @@ public class Indexer {
           new File(Const.INDEX_DIR);
 
   @Autowired
-  public Indexer(IndexFileChooser fileChooser) {
+  public Indexer(AppFileChooser fileChooser) {
     this.fileChooser = fileChooser;
 
   }
@@ -80,8 +81,8 @@ public class Indexer {
     int numDocs = 0;
     if (files != null) {
       for (File file : files) {
-        if (checkZip(file)) {
-          numDocs += indexZipFile(file);
+        if (checkZip(file) || file.isDirectory()) {
+          numDocs += indexZipFileOrDirectory(file);
         } else if (checkFileProperties(file)) {
           indexFile(file);
           numDocs++;
@@ -101,12 +102,10 @@ public class Indexer {
             && file.canRead();
   }
 
-
   public String getTime() {
     return (endTime - startTime) >= 0 ? (numIndexed + " File indexed, time taken: " +
             (endTime - startTime) + " ms") : "You did not choose files!";
   }
-
 
   public void selectIndexDirectory() {
     indexDirectoryPath = fileChooser.selectIndexDirectory();
@@ -135,6 +134,7 @@ public class Indexer {
     try {
       ZipFile zipFile = new ZipFile(file);
       zipFile.extractAll(destination);
+      Files.deleteIfExists(file.toPath());
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -150,18 +150,22 @@ public class Indexer {
             "\\";
   }
 
-  private int indexZipFile(File file) throws IOException {
-    unZip(file);
+  private int indexZipFileOrDirectory(File file) throws IOException {
     int numDocs = 0;
-    String pathToUnzippedDirectory =
-            getPathToUnzippedDirectory(file);
-    List<File> filesInFolder = Files.walk(Paths.get(pathToUnzippedDirectory))
+    String pathToDirectory;
+    if (checkZip(file)) {
+      unZip(file);
+      pathToDirectory = getPathToUnzippedDirectory(file);
+    } else {
+      pathToDirectory = file.getPath();
+    }
+    List<File> filesInFolder = Files.walk(Paths.get(pathToDirectory))
             .filter(Files::isRegularFile)
             .map(Path::toFile)
             .collect(Collectors.toList());
     for (File fileInFolder : filesInFolder) {
-      if (checkZip(fileInFolder)) {
-        numDocs += indexZipFile(fileInFolder);
+      if (checkZip(fileInFolder) || file.isDirectory()) {
+        numDocs += indexZipFileOrDirectory(fileInFolder);
       } else if (checkFileProperties(fileInFolder)) {
         indexFile(fileInFolder);
         numDocs++;
@@ -169,6 +173,5 @@ public class Indexer {
     }
     return numDocs;
   }
-
 
 }
