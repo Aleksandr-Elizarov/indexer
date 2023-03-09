@@ -1,18 +1,18 @@
 # indexer
-Application with GUI for indexing big text files. 
+Application with GUI for indexing big text files.  
 
 ## Description of the startup environment
-**java version "1.8.0_261"**
-**apache lucene version 8.11.1**
-**spring-boot version 2.2.1.RELEASE**
+**java version "1.8.0_261"**  
+**apache lucene version 8.11.1**  
+**spring-boot version 2.2.1.RELEASE**  
 
 ## Description of Application
-Application tested only on Windows 10.
-It allows you to save considerable time in the framework of search queries on large files.
+Application tested only on Windows 10.  
+It allows you to save considerable time in the framework of search queries on large files.  
 For example. Needs to find a query in 100gb file. If we do it straight through notepad, it will take about 20 minutes on one query.
 If you use indexing before searching it will take the same time. But next search on this file takes only 1 minute or 
-less! 
-**In other words, it allows you to save a lot of time on repeated searches on big files.**
+less!  
+**In other words, it allows you to save a lot of time on repeated searches on big files.**  
 
 ## How it works
 1.1. Open project via IntelliJ IDEA or Eclipse and run com.elizarov.IndexerApplication.
@@ -29,12 +29,12 @@ and check your path to java.exe. <a href=https://superuser.com/questions/256570/
 
 Javafx can't choose files and directories together like swing in one window. May be will change app for it later.
 Directories in .zip archives will be indexed.
-**100gb files will be indexed for about 20 minutes**
+**100gb files will be indexed for about 20 minutes**  
 
-3. After receiving of the massage about index finishing.
+3. After receiving of the massage about index finishing.  
 ![StartApplication](readme_images/index_finished.png)
 
-**Enter your request on search field**
+**Enter your request on search field**  
 ![StartApplication](readme_images/search_query.png)
 
 **Use <a href=https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>lucene syntax</a> for complex query**
